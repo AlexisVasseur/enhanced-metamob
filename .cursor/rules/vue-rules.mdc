@@ -1,24 +1,30 @@
 ---
-description: Rules to be applied on .vue
-globs:
-alwaysApply: false
+description: Enforce strict PrimeVue component usage following official documentation
+globs: ["**/*.vue", "**/*.ts", "**/*.js"]
+alwaysApply: true
 ---
 
+# PrimeVue Usage Rules
 
-- when u create a vue file, make it in this order :
-```vue
-<script lang=ts>
-</script>
-<template>
-</template>
-<style scoped>
-</style>
+## Component Import and Usage
+- Always import PrimeVue components individually from their specific paths (e.g., `import Button from 'primevue/button'`)
+- Never use global component registration unless explicitly needed
+- Use TypeScript types provided by PrimeVue components when available
 
-```
+## Theme and Configuration
+- Use the configured Aura theme consistently across all components
+- Follow PrimeVue's CSS classes and styling conventions
+- Avoid overriding PrimeVue component styles unless absolutely necessary
 
-- never use watch function
-- group element by business
+## Component Guidelines
+- Use PrimeVue form components (InputText, Password, Button, etc.) instead of native HTML elements for forms
+- Leverage PrimeVue's Message component for error/success notifications instead of custom solutions
+- Use Card component for content containers when appropriate
+- Prefer PrimeVue's DataTable for tabular data display
+- Use Dialog component for modals and overlays
 
-When creating a page [Feature]
-- Vue file is named [Feature]Page.vue
-- you add an entry in the router/index.ts file that match the [Feature]
+## Best Practices
+- Always check component props and events in PrimeVue documentation (can be found on https://primevue.org/) before implementation
+- Use severity props (success, info, warn, error) consistently across Message components
+- Follow PrimeVue's accessibility guidelines and ARIA attributes
+- Use PrimeVue's responsive utilities and grid system when available

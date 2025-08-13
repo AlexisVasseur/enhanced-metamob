@@ -1,44 +1,42 @@
-import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-import { getMonstersStatus, updateMonsterStatus } from "./monsters";
-import type { TradeStatus, MonsterTrade } from "./monsters.types";
-import { useMetamobApiStore } from "../metamob/metamob.store";
-import { useSettingsStore } from "../settings/settings.store";
-import { toMonsterTrade } from "./monsters.dto";
-
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
+import { getMonstersStatus, updateMonsterStatus } from './monsters'
+import type { TradeStatus, MonsterTrade } from './monsters.types'
+import { useMetamobApiStore } from '../metamob/metamob.store'
+import { useSettingsStore } from '../settings/settings.store'
+import { toMonsterTrade } from './monsters.dto'
 
 export const useMonstersStore = defineStore('monsters', () => {
-
-
-  const metamobApiStore = useMetamobApiStore();
-  const settingStore = useSettingsStore();
-  const loading = ref(false);
+  const metamobApiStore = useMetamobApiStore()
+  const settingStore = useSettingsStore()
+  const loading = ref(false)
   const monsters = ref<MonsterTrade[]>([])
-  const metamobClient = computed(() => metamobApiStore.createMetamobClient());
+  const metamobClient = computed(() => metamobApiStore.createMetamobClient())
 
   async function fetchMonsters(pseudo: string) {
-    loading.value = true;
+    loading.value = true
     try {
-      const response = await getMonstersStatus(metamobClient.value, pseudo);
-      monsters.value = response.map(toMonsterTrade);
+      const response = await getMonstersStatus(metamobClient.value, pseudo)
+      monsters.value = response.map(toMonsterTrade)
     } catch (error) {
-      console.error("Erreur lors de la récupération des monstres:", error);
+      console.error('Erreur lors de la récupération des monstres:', error)
     } finally {
-      loading.value = false;
+      loading.value = false
     }
   }
 
   function getStatusByQty(qty: number): TradeStatus {
     if (qty === 0) {
-      return 'recherche';
+      return 'recherche'
     } else if (qty > 1) {
-      return 'propose';
+      return 'propose'
     }
-    return 'aucun';
+    return 'aucun'
   }
   async function updateMonsterQty(
-    monsterList: { monsterId: number, qty: number }[]): Promise<void> {
-    loading.value = true;
+    monsterList: { monsterId: number; qty: number }[],
+  ): Promise<void> {
+    loading.value = true
 
     const listToUpdate = monsterList
       .filter((monsterQty) => {
@@ -49,26 +47,25 @@ export const useMonstersStore = defineStore('monsters', () => {
         return {
           id: monsterQty.monsterId,
           status: status,
-          quantity: monsterQty.qty
-        };
+          quantity: monsterQty.qty,
+        }
       })
-    await updateMonsterStatus(metamobClient.value, settingStore.settings.pseudo, listToUpdate);
+    await updateMonsterStatus(metamobClient.value, settingStore.settings.pseudo, listToUpdate)
     await fetchMonsters(settingStore.settings.pseudo)
-    loading.value = false;
+    loading.value = false
   }
 
   function getMonstersStatusByType(type: string) {
-    return monsters.value.filter(monster => monster.type === type);
+    return monsters.value.filter((monster) => monster.type === type)
   }
 
   function getCapturedMonstersByType(type: string) {
-    return monsters.value.filter(monster => monster.type === type && monster.quantite > 0).length;
+    return monsters.value.filter((monster) => monster.type === type && monster.quantite > 0).length
   }
 
   function getNbMonstersByType(type: string) {
-    return monsters.value.filter(monster => monster.type === type).length;
+    return monsters.value.filter((monster) => monster.type === type).length
   }
-
 
   return {
     monsters,
@@ -77,6 +74,6 @@ export const useMonstersStore = defineStore('monsters', () => {
     getMonstersStatusByType,
     getCapturedMonstersByType,
     getNbMonstersByType,
-    updateMonsterQty
+    updateMonsterQty,
   }
 })

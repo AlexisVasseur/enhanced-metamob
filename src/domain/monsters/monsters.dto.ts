@@ -1,21 +1,21 @@
-import type { MonsterTrade, TradeStatus, UpdateMonster } from "./monsters.types";
+import type { MonsterTrade, TradeStatus, UpdateMonster } from './monsters.types'
 
 export interface MonsterDto {
-  id: string;
-  nom: string;
-  slug: string;
-  type: string; // "monstre", "archimonstre", "boss"
-  image_url: string;
-  etape: string;
-  zone: string;
-  souszone: string;
-  nom_normal: string;
+  id: string
+  nom: string
+  slug: string
+  type: string // "monstre", "archimonstre", "boss"
+  image_url: string
+  etape: string
+  zone: string
+  souszone: string
+  nom_normal: string
 }
 
 export interface MonsterTradeDto extends MonsterDto {
-  quantite: string;
-  recherche: string;
-  propose: string;
+  quantite: string
+  recherche: string
+  propose: string
 }
 
 export function toMonsterTrade(monsterDto: MonsterTradeDto): MonsterTrade {
@@ -36,15 +36,15 @@ export function toMonsterTrade(monsterDto: MonsterTradeDto): MonsterTrade {
 }
 
 export interface UpdateMonsterDto {
-  id: string;
+  id: string
   etat: TradeStatus
-  quantite: string;
+  quantite: string
 }
 
 export function toUpdateMonsterDto(monster: UpdateMonster): UpdateMonsterDto {
   return {
     id: `${monster.id}`,
     etat: monster.status,
-    quantite: `${monster.quantity}`
+    quantite: `${monster.quantity}`,
   }
-} 
+}
