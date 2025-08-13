@@ -1,26 +1,42 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import MainHeader from '@/components/MainHeader.vue'
 import 'primeicons/primeicons.css'
 import './assets/reset.css'
-
-
-
 </script>
 
 <template>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet"
+  />
 
-  <RouterView />
+  <div class="app">
+    <MainHeader />
+    <main class="main-content">
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style>
 * {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 20px;
 }
 </style>

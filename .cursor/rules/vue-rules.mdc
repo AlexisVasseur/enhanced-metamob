@@ -1,0 +1,24 @@
+---
+description: Rules to be applied on .vue
+globs:
+alwaysApply: false
+---
+
+
+- when u create a vue file, make it in this order :
+```vue
+<script lang=ts>
+</script>
+<template>
+</template>
+<style scoped>
+</style>
+
+```
+
+- never use watch function
+- group element by business
+
+When creating a page [Feature]
+- Vue file is named [Feature]Page.vue
+- you add an entry in the router/index.ts file that match the [Feature]
